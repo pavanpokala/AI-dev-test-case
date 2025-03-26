@@ -106,7 +106,7 @@ def create_excel():
 
 st.title("AI-Powered Test Case & Test Data Generator")
 requirement = st.text_area("Enter System Requirement",
-                           "Login functionality should allow valid users to access the dashboard.")
+                           "")
 
 # Session state to store generated data
 if "test_cases_df" not in st.session_state:
@@ -149,10 +149,10 @@ if not st.session_state.test_cases_df.empty:
             actual_result = result.get("actual_result", "Unknown")
             results.append({
                 "Test Case": row["ID"],
+                "Status": status,
                 "Description": row["Description"],
                 "Expected Result": row["Expected Result"],
-                "Actual Result": actual_result,
-                "Status": status
+                "Actual Result": actual_result
             })
 
         results_df = pd.DataFrame(results)
@@ -167,7 +167,7 @@ if not st.session_state.test_cases_df.empty:
         failed = results_df[results_df["Status"] == "Failed"].shape[0]
         total_tests = len(results_df)
 
-        efficiency = [total_tests, total_tests * 2]  # AI vs Manual
+        efficiency = [total_tests * 2, total_tests]  # AI vs Manual
         accuracy = [passed / total_tests * 100, 70]  # AI vs Manual (assumed manual accuracy)
         cost_saving = [total_tests * 5, total_tests * 20]  # AI vs Manual (assumed cost per test)
 
